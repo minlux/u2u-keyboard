@@ -1,0 +1,47 @@
+\n Enter 0x28
+\N Shift + Enter
+\r Ctrl + Enter
+
+\t Tab 0x2B
+\T Shift + Tab
+
+\e Escape 0x29
+
+\b Backspace 0x2A
+
+\w Windows-Key left 0xE3
+\W Windows-Key right 0xE7
+
+\a Alt left 0xe2
+\A Alt right 0xe6
+
+\s Shift left 0xe1
+\S Shift right 0xe5
+
+\g Ctrt left (governance) 0xe0
+\G Ctrl right 0xe4
+
+\C Caps-Lock 0x39
+
+\i Cursor up 0x52
+\j Cursor left 0x50
+\k Cursor down 0x51
+\l Cursor right 0x4F
+
+\I insert 0x49
+\D delete 0x4C
+\^ pos1 0x4A
+\$ end 0x4D
+\P page up 0x4B
+\p page down 0x4E
+
+\1 F1 0x3A
+..
+\9 F9 0x42
+\0 F10 0x43
+
+
+\c Ctrl + c
+\d Ctrl + d
+\z Ctrl + z
+
