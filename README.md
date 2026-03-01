@@ -79,47 +79,79 @@ Inside `<TEXT>`, a backslash `\` introduces an escape sequence.  The character
 immediately following the `\` selects the action; neither character is typed
 literally.  An unrecognised or trailing `\` is silently dropped.
 
-| Sequence       | Key / Action         |
-|----------------|----------------------|
-| `\\`           | Backslash            |
-| `\H`           | Hash #               |
-| `\n`           | Enter                |
-| `\N`           | Shift + Enter        |
-| `\r`           | Ctrl + Enter         |
-| `\t`           | Tab                  |
-| `\T`           | Shift + Tab          |
-| `\e`           | Escape               |
-| `\b`           | Backspace            |
-| `\w`           | Windows key (left)   |
-| `\W`           | Windows key (right)  |
-| `\a`           | Alt (left)           |
-| `\A`           | Alt (right)          |
-| `\s`           | Shift (left)         |
-| `\S`           | Shift (right)        |
-| `\g`           | Ctrl (left)          |
-| `\G`           | Ctrl (right)         |
-| `\C`           | Caps Lock            |
-| `\i`           | Cursor up            |
-| `\k`           | Cursor down          |
-| `\j`           | Cursor left          |
-| `\l`           | Cursor right         |
-| `\I`           | Insert               |
-| `\D`           | Delete               |
-| `\^`           | Home (Pos1)          |
-| `\$`           | End                  |
-| `\P`           | Page Up              |
-| `\p`           | Page Down            |
-| `\1` – `\9`    | F1 – F9              |
-| `\0`           | F10                  |
-| `\c`           | Ctrl + C             |
-| `\d`           | Ctrl + D             |
-| `\z`           | Ctrl + Z             |
+### Regular keys
+
+| Sequence       | Key / Action  |
+|----------------|---------------|
+| `\\`           | Backslash     |
+| `\H`           | Hash `#`      |
+| `\n`           | Enter         |
+| `\t`           | Tab           |
+| `\e`           | Escape        |
+| `\b`           | Backspace     |
+| `\B`           | Pause / Break |
+| `\U`           | Caps Lock     |
+| `\i`           | Cursor up     |
+| `\k`           | Cursor down   |
+| `\j`           | Cursor left   |
+| `\l`           | Cursor right  |
+| `\I`           | Insert        |
+| `\D`           | Delete        |
+| `\^`           | Home (Pos1)   |
+| `\$`           | End           |
+| `\P`           | Page Up       |
+| `\p`           | Page Down     |
+| `\1` – `\9`    | F1 – F9       |
+| `\0`           | F10           |
+| `\-`           | F11           |
+| `\+`           | F12           |
+
+### Modifier keys
+
+Modifier sequences come in two forms:
+
+- **Lowercase** (`\w`, `\a`, `\g`, `\s`, `\c`) — sends the modifier as a
+  standalone key tap (modifier pressed with no additional key, then released).
+- **Uppercase** (`\W`, `\A`, `\G`, `\S`, `\C`) — sends the modifier bit only,
+  intended to be latched for the following key event.
+
+| Sequence | Modifier       |
+|----------|----------------|
+| `\w`     | Win (tap)      |
+| `\W`     | Win (latch)    |
+| `\a`     | Alt (tap)      |
+| `\A`     | Alt (latch)    |
+| `\g`     | AltGr (tap)    |
+| `\G`     | AltGr (latch)  |
+| `\s`     | Shift (tap)    |
+| `\S`     | Shift (latch)  |
+| `\c`     | Ctrl (tap)     |
+| `\C`     | Ctrl (latch)   |
+
+Multiple latch sequences accumulate: all latched modifier bits are OR'd together
+and applied to the next key, then cleared automatically.
 
 **Example** — open the Run dialog on Windows and launch Notepad:
 
 ```
 #1:\wnotepad\n
 ```
+
+**Example** — send Ctrl+Alt+Delete:
+
+```
+#1:\C\A\D
+```
+
+`\C` latches Ctrl, `\A` latches Alt, `\D` (Delete key) fires with both modifiers applied.
+
+**Example** — close the focused window with Alt+F4:
+
+```
+#1:\A\4
+```
+
+`\A` latches Alt, `\4` (F4) fires with Alt applied.
 
 
 ### More Examples

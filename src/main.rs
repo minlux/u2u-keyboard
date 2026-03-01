@@ -190,16 +190,30 @@ async fn on_local_text(text: &[u8]) {
     let text = utf8_to_latin9(text, &mut latin9_buf);
 
     let mut escape = false;
+    let mut latched_modifier: u8 = 0;
     for &ch in text {
         if escape {
             escape = false;
-            if let Some(keystroke) = layout::ascii_to_hid(ch, true) {
-                usb::KBD_CHANNEL.send(keystroke).await;
+            match layout::ascii_to_hid(ch, true) {
+                layout::KeyCode::Code(modifier, keycode) => {
+                    usb::KBD_CHANNEL.send((latched_modifier | modifier, keycode)).await;
+                    latched_modifier = 0;
+                }
+                layout::KeyCode::Modifier(modifier) => {
+                    latched_modifier |= modifier;
+                }
+                layout::KeyCode::None => {}
             }
         } else if ch == b'\\' {
             escape = true;
-        } else if let Some(keystroke) = layout::ascii_to_hid(ch, false) {
-            usb::KBD_CHANNEL.send(keystroke).await;
+        } else {
+            match layout::ascii_to_hid(ch, false) {
+                layout::KeyCode::Code(modifier, keycode) => {
+                    usb::KBD_CHANNEL.send((latched_modifier | modifier, keycode)).await;
+                    latched_modifier = 0;
+                }
+                layout::KeyCode::None | layout::KeyCode::Modifier(_) => {}
+            }
         }
     }
 }
