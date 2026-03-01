@@ -10,10 +10,10 @@ const C:  u8 = 0x01; // Left Ctrl
 const S:  u8 = 0x02; // Left Shift
 const A:  u8 = 0x04; // Left Alt
 const W:  u8 = 0x08; // Left GUI  (Win left)
-const RC: u8 = 0x10; // Right Ctrl
-const RS: u8 = 0x20; // Right Shift
+// const RC: u8 = 0x10; // Right Ctrl
+// const RS: u8 = 0x20; // Right Shift
 const G:  u8 = 0x40; // Right Alt (AltGr)
-const RW: u8 = 0x80; // Right GUI (Win right)
+// const RW: u8 = 0x80; // Right GUI (Win right)
 
 /// Keycodes for 'a'–'z', index 0 = 'a'.  Straight alphabetical order.
 #[rustfmt::skip]
